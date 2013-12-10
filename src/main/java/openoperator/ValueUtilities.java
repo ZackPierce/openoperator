@@ -37,7 +37,7 @@ public final class ValueUtilities {
                 flattenedChildren.add(NullValue.INSTANCE);
             }
             else {
-                Cardinality cardinality = childValue.getCardinality();
+                final Cardinality cardinality = childValue.getCardinality();
                 if (cardinality == Cardinality.SINGLE) {
                     flattenedChildren.add(childValue);
                 }
@@ -62,6 +62,40 @@ public final class ValueUtilities {
             }
         }
         return flattenedChildren;
+    }
+
+    /**
+     * Produces a single list of single-cardinality values
+     * from single, multiple, or ordered-cardinality inputs.
+     * 
+     * Ignores any null values. Record inputs are ignored as if they were null.
+     * 
+     * @param Value
+     * @return
+     */
+    public static List<SingleValue> flattenToSinglesIgnoringNull(final Value[] values) {
+        final List<SingleValue> singles = new ArrayList<SingleValue>(values.length);
+        for (final Value value : values) {
+            if (value.isNull()) {
+                continue;
+            }
+            if (value instanceof SingleValue) {
+                singles.add((SingleValue) value);
+            }
+            else if ((value.hasCardinality(Cardinality.MULTIPLE) || value.hasCardinality(Cardinality.ORDERED))
+                    && value instanceof Iterable<?>) {
+                final Iterable<?> childIterable = (Iterable<?>) value;
+                for (final Object grandChildValue : childIterable) {
+                    if (grandChildValue instanceof SingleValue) {
+                        final SingleValue grandSingle = (SingleValue) grandChildValue;
+                        if (!grandSingle.isNull()) {
+                            singles.add(grandSingle);
+                        }
+                    }
+                }
+            }
+        }
+        return singles;
     }
 
     public static boolean isAnyQtiNull(final Iterable<Value> values) {
@@ -102,7 +136,7 @@ public final class ValueUtilities {
             return NullValue.INSTANCE;
         }
         if (inputValues.length == 1) {
-            Value first = inputValues[0];
+            final Value first = inputValues[0];
             switch (first.getCardinality()) {
             case SINGLE:
                 return resultValues.get(0);

@@ -23,57 +23,59 @@ import uk.ac.ed.ph.jqtiplus.xmlutils.locators.ResourceLocator;
 
 public class QtiTestHelper {
 
-    public static URI createTestResourceUri(final String testFilePath) {
+    private static URI createTestResourceUri(final String testFilePath) {
         return URI.create("classpath:/" + testFilePath);
     }
-    
-    public static JqtiExtensionManager createJqtiExtensionManager() {
+
+    private static JqtiExtensionManager createJqtiExtensionManager() {
         return new JqtiExtensionManager(new OpenOperatorExtensionPackage());
     }
-    
+
     private static ItemSessionController loadUnitTestAssessmentItemForControl(final String testFilePath, final boolean isValid) {
         final ResolvedAssessmentItem resolvedAssessmentItem = resolveUnitTestAssessmentItem(testFilePath);
         assertSuccessfulResolution(resolvedAssessmentItem);
 
         final ItemSessionControllerSettings itemSessionControllerSettings = new ItemSessionControllerSettings();
-        final ItemProcessingMap itemProcessingMap = new ItemProcessingInitializer(resolvedAssessmentItem, isValid).initialize();
+        final ItemProcessingMap itemProcessingMap = new ItemProcessingInitializer(resolvedAssessmentItem, isValid)
+                .initialize();
         final ItemSessionState itemSessionState = new ItemSessionState();
         return new ItemSessionController(createJqtiExtensionManager(), itemSessionControllerSettings,
                 itemProcessingMap, itemSessionState);
     }
-    
+
     private static ResolvedAssessmentItem resolveUnitTestAssessmentItem(final String testFilePath) {
         final AssessmentObjectXmlLoader assessmentObjectXmlLoader = createUnitTestAssessmentObjectXmlLoader();
         final URI testFileUri = createTestResourceUri(testFilePath);
         return assessmentObjectXmlLoader.loadAndResolveAssessmentItem(testFileUri);
     }
-    
+
     private static AssessmentObjectXmlLoader createUnitTestAssessmentObjectXmlLoader() {
         final QtiXmlReader qtiXmlReader = createUnitTestQtiXmlReader();
         return new AssessmentObjectXmlLoader(qtiXmlReader, createTestFileResourceLocator());
     }
-    
-    public static QtiXmlReader createUnitTestQtiXmlReader() {
+
+    private static QtiXmlReader createUnitTestQtiXmlReader() {
         return new QtiXmlReader(createJqtiExtensionManager());
     }
 
-    public static ResourceLocator createTestFileResourceLocator() {
+    private static ResourceLocator createTestFileResourceLocator() {
         return new ClassPathResourceLocator();
     }
-    
+
     private static void assertSuccessfulResolution(final ResolvedAssessmentObject<?> resolvedAssessmentObject) {
         if (!resolvedAssessmentObject.getRootNodeLookup().wasSuccessful()) {
-            Assert.fail("Failed to load and resolve unit test resource " + resolvedAssessmentObject.getRootNodeLookup().getSystemId());
+            Assert.fail("Failed to load and resolve unit test resource "
+                    + resolvedAssessmentObject.getRootNodeLookup().getSystemId());
         }
     }
-    
+
     public static ItemSessionState runAssessmentItemProcessing(final String itemFilePath) {
-        ItemSessionController controller = loadUnitTestAssessmentItemForControl(itemFilePath, true);
-        Date initTimestamp = new Date();
-        Date entryTimestamp = ObjectUtilities.addToTime(initTimestamp, 2000L);
-        Date commitTimestamp = ObjectUtilities.addToTime(initTimestamp, 8000L);
-        Date rpTimestamp = ObjectUtilities.addToTime(commitTimestamp, 16000L);
-        Date endTimestamp = ObjectUtilities.addToTime(rpTimestamp, 32000L);
+        final ItemSessionController controller = loadUnitTestAssessmentItemForControl(itemFilePath, true);
+        final Date initTimestamp = new Date();
+        final Date entryTimestamp = ObjectUtilities.addToTime(initTimestamp, 2000L);
+        final Date commitTimestamp = ObjectUtilities.addToTime(initTimestamp, 8000L);
+        final Date rpTimestamp = ObjectUtilities.addToTime(commitTimestamp, 16000L);
+        final Date endTimestamp = ObjectUtilities.addToTime(rpTimestamp, 32000L);
         controller.initialize(initTimestamp);
         controller.enterItem(entryTimestamp);
         controller.performResponseProcessing(rpTimestamp);

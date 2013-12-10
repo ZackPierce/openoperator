@@ -12,10 +12,10 @@ public class OpenOperatorExtensionPackageTest {
     @Test
     public void testInitialization() {
         try {
-            OpenOperatorExtensionPackage ooep = new OpenOperatorExtensionPackage();
+            final OpenOperatorExtensionPackage ooep = new OpenOperatorExtensionPackage();
             Assert.assertNotNull(ooep);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Assert.fail("OpenOperatorExtensionPackage constructor should not throw any expections");
         }
 

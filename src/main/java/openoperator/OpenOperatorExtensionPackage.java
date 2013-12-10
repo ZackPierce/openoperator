@@ -24,43 +24,51 @@ public class OpenOperatorExtensionPackage implements JqtiExtensionPackage<OpenOp
     public static final String DISPLAY_NAME = "OpenOperator QTI Extension";
     private final Map<String, ExtensionNamespaceInfo> namespaceInfoMap;
     private final Set<String> customOperatorClasses;
-    
+
     public OpenOperatorExtensionPackage() {
-        final ExtensionNamespaceInfo extensionNamespaceInfo = new ExtensionNamespaceInfo(OpenOperatorConstants.OPENOPERATOR_NAMESPACE_URI, OpenOperatorConstants.OPENOPERATOR_SCHEMA_LOCATION, OpenOperatorConstants.OPENOPERATOR_DEFAULT_NAMESPACE_PREFIX);
+        final ExtensionNamespaceInfo extensionNamespaceInfo = new ExtensionNamespaceInfo(
+                OpenOperatorConstants.OPENOPERATOR_NAMESPACE_URI, OpenOperatorConstants.OPENOPERATOR_SCHEMA_LOCATION,
+                OpenOperatorConstants.OPENOPERATOR_DEFAULT_NAMESPACE_PREFIX);
         final Map<String, ExtensionNamespaceInfo> namespaceInfoMapSource = new HashMap<String, ExtensionNamespaceInfo>();
         namespaceInfoMapSource.put(extensionNamespaceInfo.getNamespaceUri(), extensionNamespaceInfo);
         this.namespaceInfoMap = ObjectUtilities.unmodifiableMap(namespaceInfoMapSource);
         this.customOperatorClasses = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
                 OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME,
                 OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME,
-                OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME
-        )));
+                OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME)));
     }
 
+    @Override
     public void lifecycleEvent(Object source, JqtiLifecycleEventType eventType) {
         return;
     }
 
+    @Override
     public String getDisplayName() {
         return DISPLAY_NAME;
     }
 
+    @Override
     public Map<String, ExtensionNamespaceInfo> getNamespaceInfoMap() {
         return namespaceInfoMap;
     }
 
+    @Override
     public boolean implementsCustomOperator(String operatorClassName) {
         return customOperatorClasses.contains(operatorClassName);
     }
 
+    @Override
     public boolean implementsCustomInteraction(String interactionClassName) {
         return false;
     }
 
+    @Override
     public CustomOperator<OpenOperatorExtensionPackage> createCustomOperator(ExpressionParent expressionParent, String operatorClassName) {
         if (OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
             return new Distance(expressionParent);
-        } else if (OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
+        }
+        else if (OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
             return new PointX(expressionParent);
         }
         else if (OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
@@ -69,6 +77,7 @@ public class OpenOperatorExtensionPackage implements JqtiExtensionPackage<OpenOp
         return null;
     }
 
+    @Override
     public CustomInteraction<OpenOperatorExtensionPackage> createCustomInteraction(QtiNode parentObject, String interactionClassName) {
         return null;
     }

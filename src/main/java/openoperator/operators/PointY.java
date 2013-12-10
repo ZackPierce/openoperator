@@ -48,7 +48,7 @@ public class PointY extends CustomOperator<OpenOperatorExtensionPackage> {
     public PointY(ExpressionParent parent) {
         super(parent);
     }
-    
+
     @Override
     protected void validateThis(ValidationContext context) {
         super.validateThis(context);
@@ -67,14 +67,14 @@ public class PointY extends CustomOperator<OpenOperatorExtensionPackage> {
             throw new QtiLogicException("Unsupported record cardinality for a child expression of "
                     + OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME);
         }
-        List<Value> flattened = ValueUtilities.flattenToSingles(childValues);
+        final List<Value> flattened = ValueUtilities.flattenToSingles(childValues);
         if (ValueUtilities.isAnyQtiNull(flattened)) {
             return NullValue.INSTANCE;
         }
-        int count = flattened.size();
-        List<IntegerValue> verticals = new ArrayList<IntegerValue>(count);
+        final int count = flattened.size();
+        final List<IntegerValue> verticals = new ArrayList<IntegerValue>(count);
         for (int i = 0; i < count; i++) {
-            Value child = flattened.get(i);
+            final Value child = flattened.get(i);
             if (!(child instanceof PointValue)) {
                 throw new QtiLogicException("Unsupported base type of " + child.getBaseType()
                         + " for a child expression of " + OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME);

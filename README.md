@@ -13,6 +13,9 @@ Retrieves the horizontal integer sub-value from values of the "point" base type.
 ### pointY ###
 Retrieves the vertical integer sub-value from values of the "point" base type.
 
+### distance ###
+Calculates the total distance from one point to a next for a series of points.
+
 Detailed operator documentation can be found in the class descriptions.
 
 ## Planned ##

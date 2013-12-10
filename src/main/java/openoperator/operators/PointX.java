@@ -56,24 +56,25 @@ public class PointX extends CustomOperator<OpenOperatorExtensionPackage> {
             context.fireValidationWarning(this, "Container should contain some children.");
         }
     }
-    
+
     @Override
     protected Value evaluateSelf(OpenOperatorExtensionPackage jqtiExtensionPackage, ProcessingContext context, Value[] childValues, int depth) {
         return pointX(childValues);
     }
-    
+
     public static Value pointX(final Value[] childValues) throws QtiLogicException {
         if (ValueUtilities.isAnyQtiRecord(childValues)) {
-            throw new QtiLogicException("Unsupported record cardinality for a child expression of " + OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME);
+            throw new QtiLogicException("Unsupported record cardinality for a child expression of "
+                    + OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME);
         }
-        List<Value> flattened = ValueUtilities.flattenToSingles(childValues);
+        final List<Value> flattened = ValueUtilities.flattenToSingles(childValues);
         if (ValueUtilities.isAnyQtiNull(flattened)) {
             return NullValue.INSTANCE;
         }
-        int count = flattened.size();
-        List<IntegerValue> horizontals = new ArrayList<IntegerValue>(count);
+        final int count = flattened.size();
+        final List<IntegerValue> horizontals = new ArrayList<IntegerValue>(count);
         for (int i = 0; i < count; i++) {
-            Value child = flattened.get(i);
+            final Value child = flattened.get(i);
             if (!(child instanceof PointValue)) {
                 throw new QtiLogicException("Unsupported base type of " + child.getBaseType()
                         + " for a child expression of " + OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME);
@@ -81,7 +82,8 @@ public class PointX extends CustomOperator<OpenOperatorExtensionPackage> {
             horizontals.add(new IntegerValue(((PointValue) child).horizontalValue()));
         }
 
-        return ValueUtilities.coalesceToMatchingCardinalityUnlessSeveralInputs(childValues, horizontals, OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME);
+        return ValueUtilities.coalesceToMatchingCardinalityUnlessSeveralInputs(childValues, horizontals,
+                OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME);
     }
 
 }
