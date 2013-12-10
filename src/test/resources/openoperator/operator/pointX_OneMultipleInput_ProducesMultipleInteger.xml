@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd"
+	xmlns:m="http://www.w3.org/1998/Math/MathML" adaptive="false"
+	timeDependent="false" identifier="pointX_OneMultipleInput_ProducesMultipleInteger"
+	title="">
+	<outcomeDeclaration identifier="HANDLED_CORRECTLY"
+		cardinality="single" baseType="boolean">
+		<defaultValue>
+			<value>false</value>
+		</defaultValue>
+	</outcomeDeclaration>
+	<itemBody>
+		<p>Dummy item body.</p>
+	</itemBody>
+	<responseProcessing>
+		<setOutcomeValue identifier="HANDLED_CORRECTLY">
+			<match>
+				<customOperator class="org.imsglobal.community.openoperator.PointX">
+					<multiple>
+						<baseValue baseType="point">1 2</baseValue>
+						<baseValue baseType="point">3 4</baseValue>
+					</multiple>
+				</customOperator>
+				<multiple>
+					<baseValue baseType="integer">1</baseValue>
+					<baseValue baseType="integer">3</baseValue>
+				</multiple>
+			</match>
+		</setOutcomeValue>
+	</responseProcessing>
+</assessmentItem>
+

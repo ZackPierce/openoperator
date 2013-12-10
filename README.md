@@ -21,9 +21,11 @@ Detailed operator documentation can be found in the class descriptions.
  * Numeric parsing - string to float and string to integer
  * Set manipulation and inspection
  * Geometry-related helpers: distance 
-* QTI XML implementations of all custom operators not requiring fundamentally new primitives. 
+* QTI XML implementations of all custom operators not requiring fundamentally new primitives.
+* Stand-alone example assessmentItem XML demonstrating all custom operator features 
 * Non-Java reference implementations of operations.
-* Document guiding practices for operation behavioral patterns
-* Expand wiki documentation of operators to reduce the time people have to spend looking through the code-centric documents.
-* Document (and automate) code style guidelines
-* Document collaboration guidelines 
+* Documentation
+ * Guiding practices for operation behavioral patterns
+ * Expand wiki documentation of operators to reduce the time people have to spend looking through the code files.
+ * Formalize (and automate) code style guidelines
+ * Describe collaboration guidelines 

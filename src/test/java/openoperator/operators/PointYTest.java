@@ -25,11 +25,11 @@ public class PointYTest {
 
     @Test()
     public void testOneNullInputProducesNull() {
-        Value result = PointY.pointY(new Value[] { NullValue.INSTANCE});
+        Value result = PointY.pointY(new Value[] { NullValue.INSTANCE });
         Assert.assertTrue(result instanceof NullValue);
         Assert.assertTrue(result.isNull());
     }
-    
+
     @Test()
     public void testOneSingleInputProducesSingleInteger() {
         Value result = PointY.pointY(new Value[] { new PointValue(1, 2) });
@@ -44,6 +44,19 @@ public class PointYTest {
         OrderedValue ordered = (OrderedValue) result;
         Assert.assertEquals(2, ((IntegerValue) ordered.get(0)).intValue());
         Assert.assertEquals(40, ((IntegerValue) ordered.get(1)).intValue());
+    }
+
+    @Test()
+    public void testFiveSingleInputProducesOrderedInteger() {
+        Value result = PointY.pointY(new Value[] { new PointValue(1, 2), new PointValue(3, 4), new PointValue(5, 6),
+                new PointValue(7, 8), new PointValue(9, 10) });
+        Assert.assertTrue(result instanceof OrderedValue);
+        OrderedValue ordered = (OrderedValue) result;
+        Assert.assertEquals(2, ((IntegerValue) ordered.get(0)).intValue());
+        Assert.assertEquals(4, ((IntegerValue) ordered.get(1)).intValue());
+        Assert.assertEquals(6, ((IntegerValue) ordered.get(2)).intValue());
+        Assert.assertEquals(8, ((IntegerValue) ordered.get(3)).intValue());
+        Assert.assertEquals(10, ((IntegerValue) ordered.get(4)).intValue());
     }
 
     @Test()
@@ -63,7 +76,7 @@ public class PointYTest {
         Assert.assertEquals(2, ((IntegerValue) ordered.get(0)).intValue());
         Assert.assertEquals(40, ((IntegerValue) ordered.get(1)).intValue());
     }
-    
+
     @Test()
     public void testOneOrderedInputProducesOrderedInteger() {
         Value result = PointY.pointY(new Value[] { OrderedValue.createOrderedValue(new PointValue(1, 2)) });
@@ -81,11 +94,22 @@ public class PointYTest {
         Assert.assertEquals(2, ((IntegerValue) ordered.get(0)).intValue());
         Assert.assertEquals(40, ((IntegerValue) ordered.get(1)).intValue());
     }
-    
+
     @Test()
     public void testMixedWithNullInputProducesNull() {
-        Value result = PointY.pointY(new Value[] { NullValue.INSTANCE, new PointValue(1, 2)});
+        Value result = PointY.pointY(new Value[] { NullValue.INSTANCE, new PointValue(1, 2) });
         Assert.assertTrue(result instanceof NullValue);
         Assert.assertTrue(result.isNull());
+    }
+
+    @Test()
+    public void testMixedInputProducesOrderedInteger() {
+        Value result = PointY.pointY(new Value[] { new PointValue(1, 2), OrderedValue.createOrderedValue(new PointValue(3, 4)), 
+                MultipleValue.createMultipleValue(new PointValue(5, 6))});
+        Assert.assertTrue(result instanceof OrderedValue);
+        OrderedValue ordered = (OrderedValue) result;
+        Assert.assertEquals(2, ((IntegerValue) ordered.get(0)).intValue());
+        Assert.assertEquals(4, ((IntegerValue) ordered.get(1)).intValue());
+        Assert.assertEquals(6, ((IntegerValue) ordered.get(2)).intValue());
     }
 }

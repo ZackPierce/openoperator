@@ -24,19 +24,19 @@ public class OpenOperatorExtensionPackageTest {
     @Test
     public void testReportsImplementsPointX() {
         Assert.assertTrue(new OpenOperatorExtensionPackage()
-                .implementsCustomOperator(OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS));
+                .implementsCustomOperator(OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME));
     }
 
     @Test
     public void testReportsImplementsPointY() {
         Assert.assertTrue(new OpenOperatorExtensionPackage()
-                .implementsCustomOperator(OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS));
+                .implementsCustomOperator(OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME));
     }
 
     @Test
     public void testReportsImplementsDistance() {
         Assert.assertTrue(new OpenOperatorExtensionPackage()
-                .implementsCustomOperator(OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS));
+                .implementsCustomOperator(OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME));
     }
 
     @Test
@@ -48,19 +48,19 @@ public class OpenOperatorExtensionPackageTest {
     @Test
     public void testCreatesPointX() {
         Assert.assertTrue(new OpenOperatorExtensionPackage().createCustomOperator(null,
-                OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS) instanceof PointX);
+                OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME) instanceof PointX);
     }
 
     @Test
     public void testCreatesPointY() {
         Assert.assertTrue(new OpenOperatorExtensionPackage().createCustomOperator(null,
-                OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS) instanceof PointY);
+                OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME) instanceof PointY);
     }
 
     @Test
     public void testCreatesDistance() {
         Assert.assertTrue(new OpenOperatorExtensionPackage().createCustomOperator(null,
-                OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS) instanceof Distance);
+                OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME) instanceof Distance);
     }
 
     @Test

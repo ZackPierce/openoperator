@@ -31,9 +31,9 @@ public class OpenOperatorExtensionPackage implements JqtiExtensionPackage<OpenOp
         namespaceInfoMapSource.put(extensionNamespaceInfo.getNamespaceUri(), extensionNamespaceInfo);
         this.namespaceInfoMap = ObjectUtilities.unmodifiableMap(namespaceInfoMapSource);
         this.customOperatorClasses = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
-                OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS,
-                OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS,
-                OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS
+                OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME,
+                OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME,
+                OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME
         )));
     }
 
@@ -58,12 +58,12 @@ public class OpenOperatorExtensionPackage implements JqtiExtensionPackage<OpenOp
     }
 
     public CustomOperator<OpenOperatorExtensionPackage> createCustomOperator(ExpressionParent expressionParent, String operatorClassName) {
-        if (OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS.equals(operatorClassName)) {
+        if (OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
             return new Distance(expressionParent);
-        } else if (OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS.equals(operatorClassName)) {
+        } else if (OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
             return new PointX(expressionParent);
         }
-        else if (OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS.equals(operatorClassName)) {
+        else if (OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
             return new PointY(expressionParent);
         }
         return null;

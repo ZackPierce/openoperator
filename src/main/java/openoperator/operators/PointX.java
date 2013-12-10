@@ -64,7 +64,7 @@ public class PointX extends CustomOperator<OpenOperatorExtensionPackage> {
     
     public static Value pointX(final Value[] childValues) throws QtiLogicException {
         if (ValueUtilities.isAnyQtiRecord(childValues)) {
-            throw new QtiLogicException("Unsupported record cardinality for a child expression of " + OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS);
+            throw new QtiLogicException("Unsupported record cardinality for a child expression of " + OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME);
         }
         List<Value> flattened = ValueUtilities.flattenToSingles(childValues);
         if (ValueUtilities.isAnyQtiNull(flattened)) {
@@ -76,12 +76,12 @@ public class PointX extends CustomOperator<OpenOperatorExtensionPackage> {
             Value child = flattened.get(i);
             if (!(child instanceof PointValue)) {
                 throw new QtiLogicException("Unsupported base type of " + child.getBaseType()
-                        + " for a child expression of " + OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS);
+                        + " for a child expression of " + OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME);
             }
             horizontals.add(new IntegerValue(((PointValue) child).horizontalValue()));
         }
 
-        return ValueUtilities.coalesceToMatchingCardinalityUnlessSeveralInputs(childValues, horizontals, OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS);
+        return ValueUtilities.coalesceToMatchingCardinalityUnlessSeveralInputs(childValues, horizontals, OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME);
     }
 
 }
