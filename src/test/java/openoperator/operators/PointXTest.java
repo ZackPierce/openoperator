@@ -1,5 +1,7 @@
 package openoperator.operators;
 
+import openoperator.QtiTestHelper;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -104,12 +106,27 @@ public class PointXTest {
 
     @Test()
     public void testMixedInputProducesOrderedInteger() {
-        Value result = PointX.pointX(new Value[] { new PointValue(1, 2), OrderedValue.createOrderedValue(new PointValue(3, 4)), 
-                MultipleValue.createMultipleValue(new PointValue(5, 6))});
+        Value result = PointX.pointX(new Value[] { new PointValue(1, 2),
+                OrderedValue.createOrderedValue(new PointValue(3, 4)),
+                MultipleValue.createMultipleValue(new PointValue(5, 6)) });
         Assert.assertTrue(result instanceof OrderedValue);
         OrderedValue ordered = (OrderedValue) result;
         Assert.assertEquals(1, ((IntegerValue) ordered.get(0)).intValue());
         Assert.assertEquals(3, ((IntegerValue) ordered.get(1)).intValue());
         Assert.assertEquals(5, ((IntegerValue) ordered.get(2)).intValue());
+    }
+
+    @Test
+    public void testExampleXml() {
+        String[] examples = new String[] { "pointX_FiveSingleInput_ProducesOrderedInteger.xml",
+                "pointX_MixedIncludingANullInput_ProducesNull.xml", "pointX_MixedInput_ProducesOrderedInteger.xml",
+                "pointX_OneMultipleInput_ProducesMultipleInteger.xml", "pointX_OneNullInput_ProducesNull.xml",
+                "pointX_OneOrderedInput_ProducesOrderedInteger.xml", "pointX_OneSingleInput_ProducesSingleInteger.xml",
+                "pointX_TwoMultipleInput_ProducesOrderedInteger.xml",
+                "pointX_TwoOrderedInput_ProducesOrderedInteger.xml", "pointX_TwoSingleInput_ProducesOrderedInteger.xml" };
+        for (String exampleName : examples) {
+            Assert.assertTrue(exampleName + " should produce a true value for HANDLED_CORRECTLY",
+                    QtiTestHelper.runItemProcessingAndRetrieveHandledCorrectly("openoperator/operator/" + exampleName));
+        }
     }
 }

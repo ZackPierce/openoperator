@@ -1,5 +1,7 @@
 package openoperator.operators;
 
+import openoperator.QtiTestHelper;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -111,5 +113,19 @@ public class PointYTest {
         Assert.assertEquals(2, ((IntegerValue) ordered.get(0)).intValue());
         Assert.assertEquals(4, ((IntegerValue) ordered.get(1)).intValue());
         Assert.assertEquals(6, ((IntegerValue) ordered.get(2)).intValue());
+    }
+    
+    @Test
+    public void testExampleXml() {
+        String[] examples = new String[] { "pointY_FiveSingleInput_ProducesOrderedInteger.xml",
+                "pointY_MixedIncludingANullInput_ProducesNull.xml", "pointY_MixedInput_ProducesOrderedInteger.xml",
+                "pointY_OneMultipleInput_ProducesMultipleInteger.xml", "pointY_OneNullInput_ProducesNull.xml",
+                "pointY_OneOrderedInput_ProducesOrderedInteger.xml", "pointY_OneSingleInput_ProducesSingleInteger.xml",
+                "pointY_TwoMultipleInput_ProducesOrderedInteger.xml",
+                "pointY_TwoOrderedInput_ProducesOrderedInteger.xml", "pointY_TwoSingleInput_ProducesOrderedInteger.xml" };
+        for (String exampleName : examples) {
+            Assert.assertTrue(exampleName + " should produce a true value for HANDLED_CORRECTLY",
+                    QtiTestHelper.runItemProcessingAndRetrieveHandledCorrectly("openoperator/operator/" + exampleName));
+        }
     }
 }
