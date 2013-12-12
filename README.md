@@ -17,7 +17,10 @@ Retrieves the vertical integer sub-value from values of the "point" base type.
 Calculates the total distance from one point to a next for a series of points.
 
 ### parseFloat ###
-Parses a single float from a single string. 
+Parses a single float from a single string.
+
+### parseInteger ###
+Parses a single integer from a single string. 
 
 ---
 Detailed operator documentation can be found in the class descriptions.
@@ -27,7 +30,6 @@ Stand-alone assessment item XML files demonstrating use of the custom operators 
 ## Planned ##
 * More Operators:  
  * Advanced substring slicing (e.g. "string contents prior to first instance of substring within target string")
- * Numeric parsing - string to float and string to integer
  * Set manipulation and inspection
 * QTI XML implementations of all custom operators not requiring fundamentally new primitives.
 * Non-Java reference implementations of operations.
