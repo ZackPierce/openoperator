@@ -19,7 +19,7 @@ public class ParseFloatTest {
 
     @Test
     public void testExampleXml() {
-        final String[] examples = new String[] {
+        final String[] examples = new String[] { "parseFloat_NullValueInput_ProducesNull.xml",
                 "parseFloat_SingleStringDecimalInterspersedWhitespace_ProducesFloatValue.xml",
                 "parseFloat_SingleStringDecimalLeadingWhitespace_ProducesFloatValue.xml",
                 "parseFloat_SingleStringDecimalMantissaExplicitPositiveExponent_ProducesFloatValue.xml",
@@ -69,6 +69,13 @@ public class ParseFloatTest {
     @Test(expected = QtiLogicException.class)
     public void testSingleNonStringInputThrowsQtiLogicException() {
         ParseFloat.parseFloat(new Value[] { new PointValue(1, 2) });
+    }
+
+    @Test
+    public void testQtiNullInputProducesNull() {
+        final Value result = ParseFloat.parseFloat(new Value[] { NullValue.INSTANCE });
+        Assert.assertTrue(result instanceof NullValue);
+        Assert.assertTrue(result.isNull());
     }
 
     @Test
@@ -167,6 +174,20 @@ public class ParseFloatTest {
         final Value result = ParseFloat.parseFloat(new Value[] { new StringValue("1") });
         Assert.assertTrue(result instanceof FloatValue);
         Assert.assertEquals(1.0, ((FloatValue) result).doubleValue(), Double.MIN_VALUE);
+    }
+
+    @Test
+    public void testSingleStringLeadingZerosIntegerMantissaNoExponent() {
+        final Value result = ParseFloat.parseFloat(new Value[] { new StringValue("0001") });
+        Assert.assertTrue(result instanceof FloatValue);
+        Assert.assertEquals(1.0, ((FloatValue) result).doubleValue(), Double.MIN_VALUE);
+    }
+
+    @Test
+    public void testSingleStringNegativeWithLeadingZerosIntegerMantissaNoExponent() {
+        final Value result = ParseFloat.parseFloat(new Value[] { new StringValue("-0001") });
+        Assert.assertTrue(result instanceof FloatValue);
+        Assert.assertEquals(-1.0, ((FloatValue) result).doubleValue(), Double.MIN_VALUE);
     }
 
     @Test

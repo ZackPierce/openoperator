@@ -12,7 +12,7 @@ import uk.ac.ed.ph.jqtiplus.node.expression.operator.CustomOperator;
 import uk.ac.ed.ph.jqtiplus.running.ProcessingContext;
 import uk.ac.ed.ph.jqtiplus.types.DataTypeBinder;
 import uk.ac.ed.ph.jqtiplus.validation.ValidationContext;
-import uk.ac.ed.ph.jqtiplus.value.FloatValue;
+import uk.ac.ed.ph.jqtiplus.value.IntegerValue;
 import uk.ac.ed.ph.jqtiplus.value.NullValue;
 import uk.ac.ed.ph.jqtiplus.value.Signature;
 import uk.ac.ed.ph.jqtiplus.value.StringValue;
@@ -20,35 +20,35 @@ import uk.ac.ed.ph.jqtiplus.value.Value;
 
 /**
  * 
- * Defines the "parseFloat" operator, which interpret an input string
- * into a float result.
+ * Defines the "parseInteger" operator, which interprets an input string
+ * into an integer result.
  * 
- * "parseFloat" accepts one sub-expression child, which must have a 
+ * "parseInteger" accepts one sub-expression child, which must have a 
  * base type of "string" and a cardinality of "single". If the input
  * has any other cardinality or base type, this operator
  * will throw a QtiLogicException.
  * 
- * The result will have a base type of "float" and a cardinality of "single".
+ * The result will have a base type of "integer" and a cardinality of "single".
  * 
  * The input string must contain only numeric representations that conform to the lexical
- * representation of a double as defined by "XML Schema Part 2: Datatypes Second Edition",
- * as found at http://www.w3.org/TR/xmlschema-2/#double-lexical-representation
+ * representation of an integer as defined by "XML Schema Part 2: Datatypes Second Edition",
+ * as found at http://www.w3.org/TR/xmlschema-2/#integer-lexical-representation
  * 
- * "For example, -1E4, 1267.43233E12, 12.78e-2, 12 , -0, 0 and INF are all legal literals"
+ * For example, 0, -2, 2, 002, -002, +2, and +002 are all legal representations.
  * 
- * If the input string is NULL, or "NaN", or does not contain a numeric representation,
+ * If the input string is NULL or does not contain a permitted integer representation,
  * then the result will be NULL.  Whitespace in the input string is ignored entirely.
  * 
  * @author Zack Pierce
  *
  */
-public class ParseFloat extends CustomOperator<OpenOperatorExtensionPackage> {
+public class ParseInteger extends CustomOperator<OpenOperatorExtensionPackage> {
 
-    private static final long serialVersionUID = -3119980923736984985L;
+    private static final long serialVersionUID = -5390750033145567518L;
 
     private static final Pattern WHITESPACE_PATTERN = Pattern.compile("\\s+");
 
-    public ParseFloat(ExpressionParent parent) {
+    public ParseInteger(ExpressionParent parent) {
         super(parent);
     }
 
@@ -56,19 +56,19 @@ public class ParseFloat extends CustomOperator<OpenOperatorExtensionPackage> {
     protected void validateThis(ValidationContext context) {
         super.validateThis(context);
         if (getChildren().size() != 1) {
-            context.fireValidationWarning(this, OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEFLOAT
+            context.fireValidationWarning(this, OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEINTEGER
                     + " should contain one child expression.");
         }
     }
 
     @Override
     protected Value evaluateSelf(OpenOperatorExtensionPackage jqtiExtensionPackage, ProcessingContext context, Value[] childValues, int depth) {
-        return parseFloat(childValues);
+        return parseInteger(childValues);
     }
 
-    public static Value parseFloat(final Value[] childValues) throws QtiLogicException, NullPointerException {
+    public static Value parseInteger(final Value[] childValues) throws QtiLogicException, NullPointerException {
         if (childValues.length != 1) {
-            throw new QtiLogicException(OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEFLOAT
+            throw new QtiLogicException(OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEINTEGER
                     + " should contain one child expression.");
         }
         final Value target = childValues[0];
@@ -76,7 +76,7 @@ public class ParseFloat extends CustomOperator<OpenOperatorExtensionPackage> {
             return NullValue.INSTANCE;
         }
         if (!(target.hasSignature(Signature.SINGLE_STRING) && target instanceof StringValue)) {
-            throw new QtiLogicException(OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEFLOAT
+            throw new QtiLogicException(OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEINTEGER
                     + " expects a single string child, but the provided child had a cardinality of "
                     + target.getCardinality().toQtiString());
         }
@@ -85,11 +85,7 @@ public class ParseFloat extends CustomOperator<OpenOperatorExtensionPackage> {
             return NullValue.INSTANCE;
         }
         try {
-            final double parsed = DataTypeBinder.parseFloat(WHITESPACE_PATTERN.matcher(raw).replaceAll(""));
-            if (Double.isNaN(parsed)) {
-                return NullValue.INSTANCE;
-            }
-            return new FloatValue(parsed);
+            return new IntegerValue(DataTypeBinder.parseInteger(WHITESPACE_PATTERN.matcher(raw).replaceAll("")));
         }
         catch (final QtiParseException e) {
             return NullValue.INSTANCE;

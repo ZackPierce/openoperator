@@ -10,6 +10,8 @@ public final class OpenOperatorConstants {
 
     public static final String OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEFLOAT = "org.imsglobal.community.openoperator.ParseFloat";
 
+    public static final String OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEINTEGER = "org.imsglobal.community.openoperator.ParseInteger";
+
     public static final String OPENOPERATOR_CLASS_DISPLAY_NAME_POINTX = "org.imsglobal.community.openoperator.PointX";
 
     public static final String OPENOPERATOR_CLASS_DISPLAY_NAME_POINTY = "org.imsglobal.community.openoperator.PointY";

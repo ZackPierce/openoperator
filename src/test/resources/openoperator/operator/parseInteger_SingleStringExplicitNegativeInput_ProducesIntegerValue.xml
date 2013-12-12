@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd"
+	xmlns:m="http://www.w3.org/1998/Math/MathML" adaptive="false"
+	timeDependent="false" identifier="parseInteger_SingleStringExplicitNegativeInput_ProducesIntegerValue"
+	title="">
+	<outcomeDeclaration identifier="HANDLED_CORRECTLY"
+		cardinality="single" baseType="boolean">
+		<defaultValue>
+			<value>false</value>
+		</defaultValue>
+	</outcomeDeclaration>
+	<itemBody>
+		<p>Dummy item body.</p>
+	</itemBody>
+	<responseProcessing>
+		<setOutcomeValue identifier="HANDLED_CORRECTLY">
+			<equal toleranceMode="exact">
+				<customOperator class="org.imsglobal.community.openoperator.ParseInteger">
+					<baseValue baseType="string">-3</baseValue>
+				</customOperator>
+				<baseValue baseType="integer">-3</baseValue>
+			</equal>
+		</setOutcomeValue>
+	</responseProcessing>
+</assessmentItem>
+
