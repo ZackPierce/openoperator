@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import openoperator.operators.Distance;
+import openoperator.operators.ParseFloat;
 import openoperator.operators.PointX;
 import openoperator.operators.PointY;
 import uk.ac.ed.ph.jqtiplus.ExtensionNamespaceInfo;
@@ -33,9 +34,10 @@ public class OpenOperatorExtensionPackage implements JqtiExtensionPackage<OpenOp
         namespaceInfoMapSource.put(extensionNamespaceInfo.getNamespaceUri(), extensionNamespaceInfo);
         this.namespaceInfoMap = ObjectUtilities.unmodifiableMap(namespaceInfoMapSource);
         this.customOperatorClasses = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
-                OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME,
-                OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME,
-                OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME)));
+                OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_DISTANCE,
+                OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEFLOAT,
+                OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_POINTX,
+                OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_POINTY)));
     }
 
     @Override
@@ -65,13 +67,16 @@ public class OpenOperatorExtensionPackage implements JqtiExtensionPackage<OpenOp
 
     @Override
     public CustomOperator<OpenOperatorExtensionPackage> createCustomOperator(ExpressionParent expressionParent, String operatorClassName) {
-        if (OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
+        if (OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_DISTANCE.equals(operatorClassName)) {
             return new Distance(expressionParent);
         }
-        else if (OpenOperatorConstants.OPENOPERATOR_POINTX_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
+        else if (OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_PARSEFLOAT.equals(operatorClassName)) {
+            return new ParseFloat(expressionParent);
+        }
+        else if (OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_POINTX.equals(operatorClassName)) {
             return new PointX(expressionParent);
         }
-        else if (OpenOperatorConstants.OPENOPERATOR_POINTY_CLASS_DISPLAY_NAME.equals(operatorClassName)) {
+        else if (OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_POINTY.equals(operatorClassName)) {
             return new PointY(expressionParent);
         }
         return null;

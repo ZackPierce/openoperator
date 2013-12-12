@@ -48,7 +48,8 @@ public class Distance extends CustomOperator<OpenOperatorExtensionPackage> {
     protected void validateThis(ValidationContext context) {
         super.validateThis(context);
         if (getChildren().size() == 0) {
-            context.fireValidationWarning(this, "Container should contain some children.");
+            context.fireValidationWarning(this, OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_DISTANCE
+                    + " should contain one ore more child expressions.");
         }
     }
 
@@ -60,7 +61,7 @@ public class Distance extends CustomOperator<OpenOperatorExtensionPackage> {
     public static Value distance(final Value[] childValues) throws QtiLogicException {
         if (ValueUtilities.isAnyQtiRecord(childValues)) {
             throw new QtiLogicException("Unsupported record cardinality for a child expression of "
-                    + OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME);
+                    + OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_DISTANCE);
         }
         final List<SingleValue> flattened = ValueUtilities.flattenToSinglesIgnoringNull(childValues);
         final int max = flattened.size();
@@ -72,7 +73,7 @@ public class Distance extends CustomOperator<OpenOperatorExtensionPackage> {
         if (!(first instanceof PointValue)) {
             throw new QtiLogicException("Unsupported base type of " + first.getBaseType()
                     + " for the first child expression of "
-                    + OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME);
+                    + OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_DISTANCE);
         }
         PointValue previous = (PointValue) first;
         for (int i = 1; i < max; i++) {
@@ -80,7 +81,7 @@ public class Distance extends CustomOperator<OpenOperatorExtensionPackage> {
             if (!(currentRaw instanceof PointValue)) {
                 throw new QtiLogicException("Unsupported base type of " + currentRaw.getBaseType()
                         + " for a child expression of "
-                        + OpenOperatorConstants.OPENOPERATOR_DISTANCE_CLASS_DISPLAY_NAME);
+                        + OpenOperatorConstants.OPENOPERATOR_CLASS_DISPLAY_NAME_DISTANCE);
             }
             final PointValue current = (PointValue) currentRaw;
 
